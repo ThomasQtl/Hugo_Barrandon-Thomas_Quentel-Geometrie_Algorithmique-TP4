@@ -1,4 +1,5 @@
 #include <io.hpp>
+#include <laplacien.hpp>
 #include <example.hpp>
 
 #include <iostream>
@@ -18,11 +19,15 @@ int main(int argc, char *argv[]){
 
     geomAlgoLib::readOFF(meshPath, myMesh);
 
+/*
     auto genus = geomAlgoLib::computeGenus(myMesh);
     std::cout << "The Genus of [" << meshPath << "] is = " << std::to_string(genus) << std::endl;
 
     geomAlgoLib::writeOFF(myMesh,"output.off");
 
     std::cout << "The end..." << std::endl;
+    */
+    geomAlgoLib::Polyhedron other = geomAlgoLib::laplacienMultipleFilter(myMesh, 1000);
+    geomAlgoLib::writeOFF(other,"output.off");
     return 0;
 }

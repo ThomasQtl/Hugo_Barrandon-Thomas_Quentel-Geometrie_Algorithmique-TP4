@@ -1,6 +1,8 @@
 add_library(geomAlgoLib
     example.hpp
     example.cpp
+    laplacien.hpp
+    laplacien.cpp
     io.hpp
     io.cpp
     measures.hpp
