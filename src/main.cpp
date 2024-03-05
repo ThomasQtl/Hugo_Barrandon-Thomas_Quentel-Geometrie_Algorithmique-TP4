@@ -1,5 +1,6 @@
 #include <io.hpp>
 #include <laplacien.hpp>
+#include <gaussien.hpp>
 #include <example.hpp>
 
 #include <iostream>
@@ -27,7 +28,7 @@ int main(int argc, char *argv[]){
 
     std::cout << "The end..." << std::endl;
     */
-    geomAlgoLib::Polyhedron other = geomAlgoLib::laplacienMultipleFilter(myMesh, 50);
-    geomAlgoLib::writeOFF(other,"output.off");
+    geomAlgoLib::Polyhedron other = geomAlgoLib::gaussienMultipleFilter(myMesh, 0.33, 1);
+    geomAlgoLib::writeOFF(other,"output-g.off");
     return 0;
 }
