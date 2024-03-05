@@ -28,7 +28,13 @@ int main(int argc, char *argv[]){
 
     std::cout << "The end..." << std::endl;
     */
+
     geomAlgoLib::Polyhedron other = geomAlgoLib::gaussienMultipleFilter(myMesh, 0.33, 1);
     geomAlgoLib::writeOFF(other,"output-g.off");
+
+    //geomAlgoLib::Polyhedron other = geomAlgoLib::laplacienMultipleFilter(myMesh, 50);
+    geomAlgoLib::Polyhedron other = geomAlgoLib::taubinMultipleFilter(myMesh, 0.33, -0.34, 50);
+    geomAlgoLib::writeOFF(other,"output.off");
+
     return 0;
 }

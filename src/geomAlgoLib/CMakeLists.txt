@@ -5,6 +5,8 @@ add_library(geomAlgoLib
     laplacien.cpp
     gaussien.hpp
     gaussien.cpp
+    taubin.hpp
+    taubin.cpp
     io.hpp
     io.cpp
     measures.hpp
