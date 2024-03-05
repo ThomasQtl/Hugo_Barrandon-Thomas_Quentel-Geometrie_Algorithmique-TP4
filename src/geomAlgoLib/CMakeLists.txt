@@ -3,6 +3,8 @@ add_library(geomAlgoLib
     example.cpp
     laplacien.hpp
     laplacien.cpp
+    gaussien.hpp
+    gaussien.cpp
     io.hpp
     io.cpp
     measures.hpp
