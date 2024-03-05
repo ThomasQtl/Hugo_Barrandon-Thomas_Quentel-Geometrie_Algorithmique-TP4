@@ -9,8 +9,7 @@ namespace geomAlgoLib
         Polyhedron filtered(P);
 
         Polyhedron shrunk = gaussienFilter(filtered, lambda);
-        Polyhedron inflated = gaussienFilter(shrunk, mu);
-        filtered = inflated;
+        filtered = gaussienFilter(shrunk, mu);
 
         return filtered;
     }

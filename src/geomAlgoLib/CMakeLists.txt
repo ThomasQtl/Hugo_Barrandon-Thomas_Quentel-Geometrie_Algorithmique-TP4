@@ -7,6 +7,8 @@ add_library(geomAlgoLib
     gaussien.cpp
     taubin.hpp
     taubin.cpp
+    freeForm.hpp
+    freeForm.cpp
     io.hpp
     io.cpp
     measures.hpp
