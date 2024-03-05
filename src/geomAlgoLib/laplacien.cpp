@@ -1,5 +1,6 @@
 #include "laplacien.hpp"
 #include <iostream>
+#include <CGAL/Polyhedron_3.h>
 
 namespace geomAlgoLib
 {
@@ -8,26 +9,23 @@ namespace geomAlgoLib
 
         Polyhedron filtered(P);
 
-        Vertex_iterator vert_iter_filtered = filtered.vertices_begin();
+        Vertex_unconst_iterator vert_iter_filtered = filtered.vertices_begin();
         // Parcours des faces du polyèdre
         for (Vertex_iterator vert_iter = P.vertices_begin(); vert_iter != P.vertices_end(); ++vert_iter)
         {
             Vector3 sumVertex(0,0,0);
             auto halfedge = vert_iter->vertex_begin();
             auto firstElt = vert_iter->vertex_begin();
-            int i = 1;
-            halfedge++;
-            while(halfedge != firstElt)
+            int i = 0;
+            do
             {
-                auto p = halfedge->vertex()->point();
+                auto p = halfedge->opposite()->vertex()->point();
                 sumVertex += Vector3(p.x(), p.y(), p.z());
                 ++i;
                 ++halfedge;
-            }
-            //std::cout << sumVertex.x() << " " << sumVertex.y() << " " << sumVertex.z() << std::endl;
+            }while(halfedge != firstElt);
             sumVertex /= i;
-            auto p1 = vert_iter_filtered->point();
-            p1 += sumVertex;
+            vert_iter_filtered->point() = Point3(sumVertex.x(), sumVertex.y(), sumVertex.z());
             ++vert_iter_filtered;
         }
 

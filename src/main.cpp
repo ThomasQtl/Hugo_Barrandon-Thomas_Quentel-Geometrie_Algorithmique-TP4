@@ -27,7 +27,7 @@ int main(int argc, char *argv[]){
 
     std::cout << "The end..." << std::endl;
     */
-    geomAlgoLib::Polyhedron other = geomAlgoLib::laplacienMultipleFilter(myMesh, 1000);
+    geomAlgoLib::Polyhedron other = geomAlgoLib::laplacienMultipleFilter(myMesh, 50);
     geomAlgoLib::writeOFF(other,"output.off");
     return 0;
 }
