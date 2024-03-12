@@ -77,11 +77,11 @@ int main(int argc, char *argv[]){
                 break;
             case 1:
                 std::cout << "Choix : Gaussien" << std::endl;
-                result = geomAlgoLib::gaussien(myMesh, lambda, nbIter);
+                result = geomAlgoLib::gaussien(myMesh, nbIter, lambda);
                 break;
             case 2:
                 std::cout << "Choix : Taubin" << std::endl;
-                result = geomAlgoLib::taubin(myMesh, lambda, mu, nbIter);
+                result = geomAlgoLib::taubin(myMesh, nbIter, lambda, mu);
                 break;
         }
     }
