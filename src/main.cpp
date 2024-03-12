@@ -62,11 +62,11 @@ int main(int argc, char *argv[]){
         }
         if(argc > 4)
         {
-            lambda = atoi(argv[4]);
+            lambda = atof(argv[4]);
         }
         if(argc > 5)
         {
-            mu = atoi(argv[5]);
+            mu = atof(argv[5]);
         }
         
         switch ( choice )
