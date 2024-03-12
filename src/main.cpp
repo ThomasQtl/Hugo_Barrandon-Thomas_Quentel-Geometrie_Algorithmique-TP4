@@ -67,11 +67,11 @@ int main(int argc, char *argv[]){
         }
         if(argc > 4)
         {
-            lambda = atoi(argv[4]);
+            lambda = atof(argv[4]);
         }
         if(argc > 5)
         {
-            mu = atoi(argv[5]);
+            mu = atof(argv[5]);
         }
         
         switch ( choice )
@@ -82,11 +82,11 @@ int main(int argc, char *argv[]){
                 break;
             case 1:
                 std::cout << "Choix : Gaussien" << std::endl;
-                result = geomAlgoLib::gaussien(myMesh, lambda, nbIter);
+                result = geomAlgoLib::gaussien(myMesh, nbIter, lambda);
                 break;
             case 2:
                 std::cout << "Choix : Taubin" << std::endl;
-                result = geomAlgoLib::taubin(myMesh, lambda, mu, nbIter);
+                result = geomAlgoLib::taubin(myMesh, nbIter, lambda, mu);
                 break;
         }
     }

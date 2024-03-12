@@ -4,7 +4,6 @@ namespace geomAlgoLib
 {
     Polyhedron lissage(const Polyhedron &P, float lambda, float mu) 
     {
-
         Polyhedron filtered(P);
 
         Vertex_unconst_iterator vert_iter_filtered = filtered.vertices_begin();
