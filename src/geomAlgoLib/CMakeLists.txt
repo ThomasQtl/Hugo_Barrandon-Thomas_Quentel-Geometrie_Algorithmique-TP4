@@ -1,12 +1,8 @@
 add_library(geomAlgoLib
     example.hpp
     example.cpp
-    laplacien.hpp
-    laplacien.cpp
-    gaussien.hpp
-    gaussien.cpp
-    taubin.hpp
-    taubin.cpp
+    lissage.hpp
+    lissage.cpp
     freeForm.hpp
     freeForm.cpp
     io.hpp

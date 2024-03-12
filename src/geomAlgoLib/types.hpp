@@ -5,6 +5,7 @@
 #include <CGAL/IO/Polyhedron_iostream.h>
 
 #include <map>
+#include <typeinfo>
 
 namespace geomAlgoLib
 {
@@ -17,6 +18,7 @@ namespace geomAlgoLib
     using Halfedge_iterator = Polyhedron::Halfedge_const_iterator;
     using Halfedge_unconst_iterator = Polyhedron::Halfedge_iterator;
     using Halfedge_facet_circulator = Polyhedron::Halfedge_around_facet_const_circulator;
+    using Vertex_handle = Polyhedron::Vertex_handle;
 
     using Facet_double_map = std::map<Polyhedron::Facet_const_handle, double>;
     using Facet_int_map = std::map<Polyhedron::Facet_const_handle, int>;
@@ -24,5 +26,5 @@ namespace geomAlgoLib
     using Vector3 = CGAL::Vector_3<Kernel>;
     using Point3 = CGAL::Point_3<Kernel>;
 
-    using Influance_map = std::map<Polyhedron::Vertex_const_handle, double>;
+    using Influance_map = std::map<Vertex_handle, double>;
 }

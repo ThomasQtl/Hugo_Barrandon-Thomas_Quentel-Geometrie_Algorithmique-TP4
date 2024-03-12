@@ -1,19 +1,44 @@
 #include <io.hpp>
-#include <laplacien.hpp>
-#include <gaussien.hpp>
-#include <taubin.hpp>
+#include <lissage.hpp>
 #include <example.hpp>
+#include <freeForm.hpp>
 
+
+#include <map>
 #include <iostream>
 #include <string>
 #include <cstdlib>
+#include <fstream>
+
+using DistoMap = std::map<int, geomAlgoLib::Vector3>;
+
+const DistoMap readDistoMap()
+{
+    std::ifstream infile("../disto.txt");
+    DistoMap m;
+    int edge;
+    float x, y, z;
+
+    while (infile >> edge >> x >> y >> z)
+    {
+        m.insert(std::make_pair(edge, geomAlgoLib::Vector3(x,y,z)));
+    }
+
+    return m;
+}
+
+
 
 int main(int argc, char *argv[]){
 
     std::cout << "Hello !" << std::endl;
 
+    if(argc < 2){
+        throw std::invalid_argument("Missing path as argument 1\n");
+    }
+
     if(argc < 3){
-        throw std::invalid_argument("This program expects at least 2 argument (path to a mesh and nb inter).");
+        throw std::invalid_argument("Missing command as argument 2 : \n 0 : laplacien \n 1 : gaussien \n 2 : taubin \n 3 : BoundingBox + distortion\n");
     }
 
     const std::string meshPath = std::string{argv[1]};
@@ -22,24 +47,64 @@ int main(int argc, char *argv[]){
 
     geomAlgoLib::readOFF(meshPath, myMesh);
 
-/*
-    auto genus = geomAlgoLib::computeGenus(myMesh);
-    std::cout << "The Genus of [" << meshPath << "] is = " << std::to_string(genus) << std::endl;
+    int choice = atoi(argv[2]);
 
-    geomAlgoLib::writeOFF(myMesh,"output.off");
+    geomAlgoLib::Polyhedron result;
 
-    std::cout << "The end..." << std::endl;
-    */
+    if(choice < 3)
+    {
+        int nbIter = 1;
+        float lambda = 0.33;
+        float mu = -0.34;
+        if(argc > 3)
+        {
+            nbIter = atoi(argv[3]);
+        }
+        if(argc > 4)
+        {
+            lambda = atoi(argv[4]);
+        }
+        if(argc > 5)
+        {
+            mu = atoi(argv[5]);
+        }
+        
+        switch ( choice )
+        {
+            case 0:
+                std::cout << "Choix : Laplacien" << std::endl;
+                result = geomAlgoLib::laplacien(myMesh, nbIter);
+                break;
+            case 1:
+                std::cout << "Choix : Gaussien" << std::endl;
+                result = geomAlgoLib::gaussien(myMesh, lambda, nbIter);
+                break;
+            case 2:
+                std::cout << "Choix : Taubin" << std::endl;
+                result = geomAlgoLib::taubin(myMesh, lambda, mu, nbIter);
+                break;
+        }
+    }
+    if(choice == 3)
+    {
+        std::cout << "Choix : BoundingBox" << std::endl;
+        geomAlgoLib::BoundingBox bb(myMesh);
 
-    int nbIter = atoi(argv[2]);
+        DistoMap distoMap = readDistoMap();
 
-    /*
-    geomAlgoLib::Polyhedron other = geomAlgoLib::gaussienMultipleFilter(myMesh, 0.33, 1);
-    geomAlgoLib::writeOFF(other,"output-g.off");*/
+        for (const auto& [key, value] : distoMap)
+        {
+            bb.distortion(key, value);
+        }
 
-    //geomAlgoLib::Polyhedron other = geomAlgoLib::laplacienMultipleFilter(myMesh, 50);
-    geomAlgoLib::Polyhedron other = geomAlgoLib::taubinMultipleFilter(myMesh, 0.33, -0.34, nbIter);
-    geomAlgoLib::writeOFF(other,"output-t.off");
+        result = bb.getPolyhedron();
+    }
+
+    geomAlgoLib::writeOFF(result,"../output.off");
+
+    const char* command = "meshlab ../output.off";
+
+    int cmdResult = system(command);
 
     return 0;
 }

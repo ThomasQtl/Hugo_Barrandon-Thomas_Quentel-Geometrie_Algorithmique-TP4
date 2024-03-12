@@ -5,7 +5,7 @@ namespace geomAlgoLib
 {
     BoundingBox::BoundingBox(const Polyhedron &P)
     {
-        _poly = P;
+        _poly = Polyhedron(P);
         generateVertices();
         generateInfluances();
     }
@@ -44,7 +44,7 @@ namespace geomAlgoLib
     void BoundingBox::generateInfluances()
     {
         double dists[8];
-        for (Vertex_iterator vert_iter = _poly.vertices_begin(); vert_iter != _poly.vertices_end(); ++vert_iter)
+        for (Vertex_unconst_iterator vert_iter = _poly.vertices_begin(); vert_iter != _poly.vertices_end(); ++vert_iter)
         {
             auto p = vert_iter->point();
             double sumDists = 0;
@@ -53,10 +53,19 @@ namespace geomAlgoLib
                 dists[i] = CGAL::sqrt(CGAL::squared_distance(_verteces[i], p));
                 sumDists += dists[i];
             }
+            
             for(int i = 0; i < 8; ++i)
             {
-                _influances[i].insert(*vert_iter, dists[i]/sumDists);
+                _influances[i].insert(std::make_pair(vert_iter, dists[i]/sumDists));
             }
+        }
+    }
+
+    void BoundingBox::distortion(int edge, Vector3 movement)
+    {
+        for (auto& [key, value] : _influances[edge])
+        {
+            key->point() = key->point() + (movement * value);
         }
     }
 }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "types.hpp"
+#include <utility>
 
 
 namespace geomAlgoLib
@@ -17,5 +18,7 @@ namespace geomAlgoLib
 
         public:
             BoundingBox(const Polyhedron &P);
+            void distortion(int edge, Vector3 movement);
+            Polyhedron getPolyhedron(){return _poly;} 
     };
 }
