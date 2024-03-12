@@ -51,7 +51,6 @@ namespace geomAlgoLib
         for(int i = 0; i < nbIter; ++i)
         {
             mesh = lissage(mesh, lambda, 0);
-            printf("%d\n", i);
         }
         return mesh;
     }
