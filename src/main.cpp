@@ -19,9 +19,14 @@ const DistoMap readDistoMap()
     int edge;
     float x, y, z;
 
+    for(int i = 0; i < 8;  ++i)
+    {
+        m.insert(std::make_pair(i, geomAlgoLib::Vector3(0,0,0)));
+    } 
+
     while (infile >> edge >> x >> y >> z)
     {
-        m.insert(std::make_pair(edge, geomAlgoLib::Vector3(x,y,z)));
+        m[edge] += geomAlgoLib::Vector3(x,y,z);
     }
 
     return m;
@@ -94,7 +99,8 @@ int main(int argc, char *argv[]){
 
         for (const auto& [key, value] : distoMap)
         {
-            bb.distortion(key, value);
+            if(value != geomAlgoLib::Vector3(0,0,0))
+                bb.distortion(key, value);
         }
 
         result = bb.getPolyhedron();

@@ -39,6 +39,7 @@ namespace geomAlgoLib
         _verteces[5] = Point3(maxi[0], mini[1], maxi[2]);
         _verteces[6] = Point3(maxi[0], maxi[1], mini[2]);
         _verteces[7] = Point3(maxi[0], maxi[1], maxi[2]);
+
     }
 
     void BoundingBox::generateInfluances()
@@ -48,15 +49,22 @@ namespace geomAlgoLib
         {
             auto p = vert_iter->point();
             double sumDists = 0;
+
+            float dtx = _verteces[7].x() - _verteces[0].x();
+            float dty = _verteces[7].y() - _verteces[0].y();
+            float dtz = _verteces[7].z() - _verteces[0].z();
+
             for(int i = 0; i < 8; ++i)
             {
-                dists[i] = CGAL::sqrt(CGAL::squared_distance(_verteces[i], p));
-                sumDists += dists[i];
-            }
-            
-            for(int i = 0; i < 8; ++i)
-            {
-                _influances[i].insert(std::make_pair(vert_iter, dists[i]/sumDists));
+                float dx = abs(_verteces[i].x() - p.x());
+                float dy = abs(_verteces[i].y() - p.y());
+                float dz = abs(_verteces[i].z() - p.z());
+
+                dx = 1 - ((dtx - dx)/dtx);
+                dy = 1 - ((dty - dy)/dty);
+                dz = 1 - ((dtz - dz)/dtz);
+
+                _influances[i].insert(std::make_pair(vert_iter, dx*dy*dz));
             }
         }
     }

@@ -26,5 +26,5 @@ namespace geomAlgoLib
     using Vector3 = CGAL::Vector_3<Kernel>;
     using Point3 = CGAL::Point_3<Kernel>;
 
-    using Influance_map = std::map<Vertex_handle, double>;
+    using Influance_map = std::map<Vertex_handle, float>;
 }
